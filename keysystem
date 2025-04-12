@@ -1,0 +1,76 @@
+local HttpService = game:GetService("HttpService")
+local OrionLib = loadstring(game:HttpGet("https://pastebin.com/raw/6a4F5ENH", true))()
+ 
+local Window = OrionLib:MakeWindow({
+    Name = "XS | Key System",
+    HidePremium = false,
+    SaveConfig = true,
+    ConfigFolder = "OrionTest"
+})
+ 
+local pastebinURL = "https://pastebin.com/raw/GHuiUc3i"
+local keyLink = "https://lootdest.org/s?5dsEPsun"
+ 
+local function fetchKey()
+    local success, result = pcall(function()
+        return game:HttpGet(pastebinURL)
+    end)
+    if success then
+        return result
+    else
+        return nil
+    end
+end
+ 
+local function checkKey(inputKey)
+    local correctKey = fetchKey()
+    if correctKey and inputKey == correctKey then
+        return true
+    else
+        return false
+    end
+end
+ 
+local keyTab = Window:MakeTab({
+    Name = "Key System",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+ 
+keyTab:AddTextbox({
+    Name = "Enter Key",
+    Default = "",
+    TextDisappear = true,
+    Callback = function(value)
+        if checkKey(value) then
+            OrionLib:MakeNotification({
+                Name = "Acesso Válido | XS✨",
+                Content = "Bem-vindo! Aproveite nosso script ❤️✨",
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+ 
+            loadstring(game:HttpGet('https://raw.githubusercontent.com/GlobalExploits/xshub/refs/heads/main/.gitignore'))()
+        else
+            OrionLib:MakeNotification({
+                Name = "Accesso inválido",
+                Content = "Invalid Key!",
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+        end
+    end
+})
+ 
+keyTab:AddButton({
+    Name = "Copy Key",
+    Callback = function()
+        setclipboard(keyLink)
+        OrionLib:MakeNotification({
+            Name = "Texto Copiado",
+            Content = "O link foi copiado para a área de transferência!",
+            Image = "rbxassetid://4483345998",
+            Time = 5
+        })
+    end
+})
